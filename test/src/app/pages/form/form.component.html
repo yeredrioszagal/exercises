@@ -1,0 +1,77 @@
+<div class="container-fluid">
+  <h1>Formulario </h1>
+
+
+  <form [formGroup]="searchForm">
+    <div class="row">
+      <div class="col-10">
+        <div class="col-5 mt-2">
+          <mat-form-field class="example-full-width" appearance="fill" style="width: 100%;" required>
+            <mat-label>Ingresa Nombres</mat-label>
+            <input matInput formControlName="nombres" type="text">
+            <mat-error *ngIf="nombres.hasError('required')">El campo es requerido</mat-error>
+            <mat-error *ngIf="nombres.hasError('pattern')">Formato invalido, no se permiten espacios en blanco al final del nombre</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-5 mt-2">
+          <mat-form-field class="example-full-width" appearance="fill" style="width: 100%;" required>
+            <mat-label>Ingresa Apellidos</mat-label>
+            <input matInput formControlName="apellidos" type="text">
+            <mat-error *ngIf="apellidos.hasError('required')">El campo es requerido</mat-error>
+            <mat-error *ngIf="apellidos.hasError('pattern')">Formato invalido, no se permiten espacios en blanco al final del apellido</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-5 mt-2">
+          <mat-checkbox formControlName="fumas">¿Fumas?</mat-checkbox>
+        </div>
+        <div class="col-5 mt-2">
+          <mat-checkbox formControlName="actualmentePracticasLectura" (change)="onChangePracticasLectura()">¿Actualmente
+            Practicas Lectura?</mat-checkbox>
+        </div>
+        <div class="col-5 mt-2" *ngIf="actualmentePracticasLectura.value">
+          <div class="row">
+            <div class="col-12">
+              <ng-container formArrayName="librosLeidosUltimosTresMeses">
+                <ng-container *ngFor="let libro of librosLeidosUltimosTresMesesArray.controls; index as i">
+                  <mat-form-field class="example-full-width" appearance="fill" style="width: 100%;" required>
+                    <mat-label>Ingresa título del libro {{i+1}}</mat-label>
+                    <input matInput [formControlName]="i" type="text">
+                    <mat-error *ngIf="librosLeidosUltimosTresMesesArray.get(i+'')?.hasError('required')">El campo es
+                      requerido</mat-error>
+                  </mat-form-field>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="col-12 mt-2">
+              <button mat-raised-button color="primary" (click)="addLibro()" type="button">Agregar Libro</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-5 mt-3">
+          <mat-form-field appearance="fill" style="width: 100%;" required>
+            <mat-label>Selecciona estadoCivil</mat-label>
+            <mat-select formControlName="estadoCivil">
+              <mat-option *ngFor="let item of listadEstadosCivil" [value]="item">{{item}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="estadoCivil.hasError('required')">El campo es requerido</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-5 mt-3" *ngIf="showAlert">
+          <div class="alert alert-success" role="alert" *ngIf="searchForm.valid">
+            Formulario Exitoso
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="searchForm.invalid">
+            Formulario Inválido
+          </div>
+        </div>
+
+        <div class="col-5 text-center mt-2">
+          <button mat-raised-button color="primary" (click)="search()">Enviar</button>
+          <!-- <button mat-raised-button color="primary" (click)="search()" [disabled]="searchForm.invalid">Enviar</button> -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

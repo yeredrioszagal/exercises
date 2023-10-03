@@ -1,0 +1,48 @@
+<div class="wrapper wrapper-full-page">
+  <div class="login-background"></div>
+  <div class="page-header header-filter h-100">
+    <div class="container" style="height:75%; min-height: 400px; padding-top: 15vh !important;">
+      <div class="row h-100">
+        <div class="col-lg-5 col-md-8 col-sm-12 m-auto">
+
+          <div class="card">
+            <form class="form" [formGroup]="formLogin">
+              <div class="card-body text-center">
+                <h2 class="card-title">Login</h2>
+                <div class="bmd-form-group ">
+                  <div class="input-group w-100">
+                    <mat-form-field class="col pl-0 background-input" appearance="outline">
+                      <input matInput formControlName="username" [placeholder]="'Ingresa usuario'" type="text"
+                        maxlength="120" required (keyup.enter)="login()">
+                      <mat-icon matPrefix>account_circle</mat-icon>
+                      <mat-error *ngIf="username.hasError('pattern')">{{'LOGIN.PATTERN'}}</mat-error>
+                      <mat-error *ngIf="username.hasError('required')">{{'LOGIN.REQUIRED'}}</mat-error>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+
+                <div class="bmd-form-group mt-3">
+                  <div class="input-group w-100">
+                    <mat-form-field class="col pl-0 background-input" appearance="outline">
+                      <input matInput formControlName="password" [placeholder]="'Ingresa contraseña'" maxlength="15"
+                        type="password" required>
+                      <mat-icon matPrefix>lock</mat-icon>
+                      <mat-error *ngIf="password.hasError('required')">{{'LOGIN.PATTERN'}}</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="card-footer justify-content-center">
+              <div style="text-align: center; margin:0 auto;">
+                <button class="btn btn-primary btn-md" [disabled]="!formLogin.valid" (click)="login()">Iniciar Sesión
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
